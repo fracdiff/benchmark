@@ -1,8 +1,7 @@
-import pandas as pd
-import seaborn
 import matplotlib
 import matplotlib.pyplot as plt
-
+import pandas as pd
+import seaborn
 
 GITHUB_GRAY = "#6a737d"
 GITHUB_BLUE = "#0366d6"
@@ -60,7 +59,7 @@ if __name__ == "__main__":
 
     plt.figure(figsize=(16, 4))
 
-    plt.subplot(1,2,1)
+    plt.subplot(1, 2, 1)
     df = df_all[df_all["n_features"] == 1]
     dff = df[df["method"] == "fracdiff"]
     dfo = df[df["method"] == "official"]
@@ -68,8 +67,12 @@ if __name__ == "__main__":
     time_std_ms_f = 1000 * dff["time_std"]
     time_mean_ms_o = 1000 * dfo["time_mean"]
     time_std_ms_o = 1000 * dfo["time_std"]
-    plt.errorbar(dff["n_samples"], time_mean_ms_f, yerr=time_std_ms_f, label="fracdiff", fmt="o")
-    plt.errorbar(dfo["n_samples"], time_mean_ms_o, yerr=time_std_ms_o, label="official", fmt="o")
+    plt.errorbar(
+        dff["n_samples"], time_mean_ms_f, yerr=time_std_ms_f, label="fracdiff", fmt="o"
+    )
+    plt.errorbar(
+        dfo["n_samples"], time_mean_ms_o, yerr=time_std_ms_o, label="official", fmt="o"
+    )
     plt.xscale("log")
     plt.yscale("log")
     plt.xlabel("Number of Samples")
@@ -77,7 +80,7 @@ if __name__ == "__main__":
     plt.legend()
     plt.title("Computation Time")
 
-    plt.subplot(1,2,2)
+    plt.subplot(1, 2, 2)
     df = df_all[df_all["n_samples"] == 1000]
     dff = df[df["method"] == "fracdiff"]
     dfo = df[df["method"] == "official"]
@@ -85,8 +88,12 @@ if __name__ == "__main__":
     time_std_ms_f = 1000 * dff["time_std"]
     time_mean_ms_o = 1000 * dfo["time_mean"]
     time_std_ms_o = 1000 * dfo["time_std"]
-    plt.errorbar(dff["n_features"], time_mean_ms_f, yerr=time_std_ms_f, label="fracdiff", fmt="o")
-    plt.errorbar(dfo["n_features"], time_mean_ms_o, yerr=time_std_ms_o, label="official", fmt="o")
+    plt.errorbar(
+        dff["n_features"], time_mean_ms_f, yerr=time_std_ms_f, label="fracdiff", fmt="o"
+    )
+    plt.errorbar(
+        dfo["n_features"], time_mean_ms_o, yerr=time_std_ms_o, label="official", fmt="o"
+    )
     plt.xscale("log")
     plt.yscale("log")
     plt.xlabel("Number of Features")

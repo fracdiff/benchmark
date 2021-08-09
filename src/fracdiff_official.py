@@ -1,4 +1,3 @@
-import fracdiff
 import numpy as np
 import pandas as pd
 
@@ -29,7 +28,7 @@ def getWeights(d: int, size: int) -> np.ndarray:
     return w
 
 
-def fracDiff(series:pd.Series, d:float, thres:float=0.01) -> pd.Series:
+def fracDiff(series: pd.Series, d: float, thres: float = 0.01) -> pd.Series:
     """
 
     Parameters
