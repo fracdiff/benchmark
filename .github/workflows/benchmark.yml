@@ -23,9 +23,13 @@ jobs:
 
     - name: Dump Environment
       run: |
+        cat /proc/cpuinfo
         cat /proc/cpuinfo > out/env.txt
+        cat /proc/meminfo
         cat /proc/meminfo >> out/env.txt
+        python --version
         python --version >> out/env.txt
+        pip show fracdiff
         pip show fracdiff >> out/env.txt
 
     - name: Time
