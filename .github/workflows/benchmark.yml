@@ -1,0 +1,52 @@
+name: Benchmark
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+
+  benchmark:
+
+    name: Benchmark
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-python@v2
+
+    - name: Install
+      run: pip install -r requirements.txt
+
+    - name: Dump Environment
+      run: |
+        cat /proc/cpuinfo > out/env.txt
+        cat /proc/meminfo >> out/env.txt
+        python --version >> out/env.txt
+        pip show fracdiff >> out/env.txt
+
+    - name: Time
+      run: python time.py
+
+    - name: Plot
+      run: python plot.py
+
+    - name: Upload Outputs
+      uses: actions/upload-artifact@v2
+      with:
+        name: out
+        path: out
+
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        name: Release ${{ github.run_id }}
+        tag_name: ${{ github.run_id }}
+        body: |
+          * Reference: ${{ github.ref }}
+          * Workflow: [${{ github.run_id }}](https://github.com/simaki/dissertation/actions/runs/${{ github.run_id }})
+          * Commit: ${{ github.sha }}
+        files: out/*
