@@ -21,17 +21,6 @@ jobs:
     - name: Install
       run: pip install -r requirements.txt
 
-    - name: Dump Environment
-      run: |
-        cat /proc/cpuinfo
-        cat /proc/cpuinfo > out/env.txt
-        cat /proc/meminfo
-        cat /proc/meminfo >> out/env.txt
-        python --version
-        python --version >> out/env.txt
-        pip show fracdiff
-        pip show fracdiff >> out/env.txt
-
     - name: Time
       run: python time.py
 
@@ -44,17 +33,34 @@ jobs:
         name: out
         path: out
 
+    - name: Create Release Note
+      run: |
+        echo ${{ github.ref }}
+        echo ${{ github.ref }} >> out/note.txt
+        echo ${{ github.run_id }}
+        echo ${{ github.run_id }} >> out/note.txt
+        echo ${{ github.sha }}
+        echo ${{ github.sha }} >> out/note.txt
+        cat /proc/cpuinfo
+        cat /proc/cpuinfo >> out/note.txt
+        cat /proc/meminfo
+        cat /proc/meminfo >> out/note.txt
+        python --version
+        python --version >> out/note.txt
+        pip show fracdiff
+        pip show fracdiff >> out/note.txt
+
     - run: ls
 
     - run: tree .
 
     - name: Release
-      uses: softprops/action-gh-release@v1
+      # uses: softprops/action-gh-release@v1
+      # https://github.com/softprops/action-gh-release/issues/139
+      uses: softprops/action-gh-release@59c3b4891632ff9a897f99a91d7bc557467a3a22
       with:
-        name: Release ${{ github.run_id }}
+        name: ${{ github.run_id }}
         tag_name: ${{ github.run_id }}
-        body: |
-          * Reference: ${{ github.ref }}
-          * Workflow: [${{ github.run_id }}](https://github.com/simaki/dissertation/actions/runs/${{ github.run_id }})
-          * Commit: ${{ github.sha }}
+        body_path: out/note.txt
+        token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
         files: ./out/*
