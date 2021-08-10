@@ -47,19 +47,34 @@ jobs:
         echo ${{ github.run_id }} >> out/note.txt
         echo ${{ github.sha }}
         echo ${{ github.sha }} >> out/note.txt
+    
+    - name: Save System Info (Ubuntu)
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      run: |
         cat /proc/cpuinfo
         cat /proc/cpuinfo >> out/note.txt
         cat /proc/meminfo
         cat /proc/meminfo >> out/note.txt
+    
+    - name: Save System Info (Windows)
+      if: ${{ matrix.os == 'windows-latest' }}
+      run: |
+        systeminfo
+        systeminfo >> out/note.txt
+
+    - name: Save System Info (MacOS)
+      if: ${{ matrix.os == 'macos-latest' }}
+      run: |
+        system_profiler SPHardwareDataType
+        system_profiler SPHardwareDataType >> out/note.txt
+    
+    - name: Save Python and Fracdiff versions
+      run: |
         python --version
         python --version >> out/note.txt
         pip show fracdiff
         pip show fracdiff >> out/note.txt
         echo '```' >> out/note.txt
-
-    - run: ls
-
-    - run: tree .
 
     - name: Release
       # uses: softprops/action-gh-release@v1
