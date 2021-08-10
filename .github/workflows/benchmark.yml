@@ -9,8 +9,12 @@ jobs:
   benchmark:
 
     name: Benchmark
+    
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
 
-    runs-on: [windows-latest, macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
 
     steps:
 
