@@ -1,0 +1,68 @@
+name: Benchmark
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+
+  benchmark:
+
+    name: Benchmark
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-python@v2
+
+    - name: Install
+      run: pip install -r requirements.txt
+
+    - name: Time
+      run: python time.py
+
+    - name: Plot
+      run: python plot.py
+
+    - name: Upload Outputs
+      uses: actions/upload-artifact@v2
+      with:
+        name: out
+        path: out
+
+    - name: Create Release Note
+      run: |
+        touch out/note.txt
+        echo '```' >> out/note.txt
+        echo ${{ github.ref }}
+        echo ${{ github.ref }} >> out/note.txt
+        echo ${{ github.run_id }}
+        echo ${{ github.run_id }} >> out/note.txt
+        echo ${{ github.sha }}
+        echo ${{ github.sha }} >> out/note.txt
+        cat /proc/cpuinfo
+        cat /proc/cpuinfo >> out/note.txt
+        cat /proc/meminfo
+        cat /proc/meminfo >> out/note.txt
+        python --version
+        python --version >> out/note.txt
+        pip show fracdiff
+        pip show fracdiff >> out/note.txt
+        echo '```' >> out/note.txt
+
+    - run: ls
+
+    - run: tree .
+
+    - name: Release
+      # uses: softprops/action-gh-release@v1
+      # https://github.com/softprops/action-gh-release/issues/139
+      uses: softprops/action-gh-release@59c3b4891632ff9a897f99a91d7bc557467a3a22
+      with:
+        name: ${{ github.run_id }}
+        tag_name: ${{ github.run_id }}
+        body_path: out/note.txt
+        files: ./out/*
