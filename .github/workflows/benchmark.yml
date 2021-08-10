@@ -79,7 +79,7 @@ jobs:
       # https://github.com/softprops/action-gh-release/issues/139
       uses: softprops/action-gh-release@59c3b4891632ff9a897f99a91d7bc557467a3a22
       with:
-        name: ${{ github.run_id }}
+        name: ${{ github.run_id }}-${{ matrix.os }}
         tag_name: ${{ github.run_id }}
         body_path: out/note.txt
         files: ./out/*
