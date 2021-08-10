@@ -49,8 +49,7 @@ if __name__ == "__main__":
 
     params_methods = ["fracdiff", "official"]
 
-    # params_n_samples = [100, 1000, 10000, 100000]
-    params_n_samples = [100, 1000]
+    params_n_samples = [100, 1000, 10000, 100000]
     params = product(params_n_samples, params_methods)
     for n_samples, method in tqdm(list(params)):
         n_features = 1
@@ -65,8 +64,7 @@ if __name__ == "__main__":
             }
         )
 
-    # params_n_features = [10, 100, 1000]
-    params_n_features = [10, 100]
+    params_n_features = [10, 100, 1000]
     params = product(params_n_features, params_methods)
     for n_features, method in tqdm(list(params)):
         n_samples = 1000
