@@ -44,6 +44,10 @@ jobs:
         name: out
         path: out
 
+    - run: ls
+
+    - run: tree .
+
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
@@ -53,4 +57,4 @@ jobs:
           * Reference: ${{ github.ref }}
           * Workflow: [${{ github.run_id }}](https://github.com/simaki/dissertation/actions/runs/${{ github.run_id }})
           * Commit: ${{ github.sha }}
-        files: out/
+        files: out
