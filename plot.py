@@ -40,7 +40,7 @@ if __name__ == "__main__":
     df = df_all[df_all["n_features"] == 1].copy()
     series_time_mean = (1000 * df["time_mean"]).map(fmt)
     series_time_std = (1000 * df["time_std"]).map(fmt)
-    df["time (ms)"] = series_time_mean.str.cat(series_time_std, sep=" +-")
+    df["time (ms)"] = series_time_mean.str.cat(series_time_std, sep=" +- ")
     with open("out/table_n_samples.md", "w") as f:
         md = df.pivot("n_samples", columns=["method"], values="time (ms)").to_markdown()
         f.write(md)
@@ -49,7 +49,7 @@ if __name__ == "__main__":
     df = df_all[df_all["n_samples"] == 1000].copy()
     series_time_mean = (1000 * df["time_mean"]).map(fmt)
     series_time_std = (1000 * df["time_std"]).map(fmt)
-    df["time (ms)"] = series_time_mean.str.cat(series_time_std, sep=" +-")
+    df["time (ms)"] = series_time_mean.str.cat(series_time_std, sep=" +- ")
     with open("out/table_n_features.md", "w") as f:
         md = df.pivot(
             "n_features", columns=["method"], values="time (ms)"
