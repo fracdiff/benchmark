@@ -57,4 +57,4 @@ jobs:
           * Reference: ${{ github.ref }}
           * Workflow: [${{ github.run_id }}](https://github.com/simaki/dissertation/actions/runs/${{ github.run_id }})
           * Commit: ${{ github.sha }}
-        files: out
+        files: ./out/*
