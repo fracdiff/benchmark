@@ -62,5 +62,4 @@ jobs:
         name: ${{ github.run_id }}
         tag_name: ${{ github.run_id }}
         body_path: out/note.txt
-        token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
         files: ./out/*
