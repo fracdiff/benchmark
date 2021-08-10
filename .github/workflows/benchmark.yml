@@ -35,6 +35,8 @@ jobs:
 
     - name: Create Release Note
       run: |
+        touch out/note.txt
+        echo '```' >> out/note.txt
         echo ${{ github.ref }}
         echo ${{ github.ref }} >> out/note.txt
         echo ${{ github.run_id }}
@@ -49,6 +51,7 @@ jobs:
         python --version >> out/note.txt
         pip show fracdiff
         pip show fracdiff >> out/note.txt
+        echo '```' >> out/note.txt
 
     - run: ls
 
